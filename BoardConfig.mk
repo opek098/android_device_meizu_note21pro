@@ -170,4 +170,4 @@ TARGET_INIT_VENDOR_LIB := libinit_MEIZU NOTE 21 pro
 TARGET_RECOVERY_DEVICE_MODULES := libinit_MEIZU NOTE 21 pro
 
 # Maintainer (optional)
-TW_MAINTAINER := "アンドレイ"
+TW_MAINTAINER := Opek X Furina
