@@ -42,7 +42,7 @@ jobs:
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
           # Target lunch sudah disesuaikan dengan nama file tanpa spasi
-          lunch twrp_note21pro-eng || lunch omni_note21pro-eng
+          lunch twrp_meizu_note21pro-eng || lunch omni_meizu_note21pro-eng
           mka recoveryimage -j$(nproc --all)
 
       - name: Upload Recovery
