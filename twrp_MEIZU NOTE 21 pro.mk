@@ -5,13 +5,13 @@
 #
 
 # Inherit from MEIZU NOTE 21 pro device
-$(call inherit-product, device/meizu/MEIZU NOTE 21 pro/device.mk)
+$(call inherit-product, device/meizu/meizu_note_21pro/device.mk)
 
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Product Specifics
-PRODUCT_NAME := twrp_MEIZU NOTE 21 pro
+PRODUCT_NAME := twrp_meizu_note21pro
 PRODUCT_DEVICE := MEIZU NOTE 21 pro
 PRODUCT_BRAND := Meizu
 PRODUCT_MODEL := Meizu MEIZU NOTE 21 pro
