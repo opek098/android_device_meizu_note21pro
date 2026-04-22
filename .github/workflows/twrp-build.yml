@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo apt-get update || true
+          # Langsung install tanpa update lama untuk menghindari macet di server Ubuntu
           sudo apt-get install -y \
             gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib \
             libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev \
@@ -41,7 +41,7 @@ jobs:
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
-          # Pastikan kamu sudah rename file .mk di repo agar sesuai dengan lunch di bawah
+          # Target lunch sudah disesuaikan dengan nama file tanpa spasi
           lunch twrp_note21pro-eng || lunch omni_note21pro-eng
           mka recoveryimage -j$(nproc --all)
 
