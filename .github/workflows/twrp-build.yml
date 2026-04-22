@@ -1,4 +1,4 @@
-name: Build TWRP
+name: Build TWRP Meizu Note 21 Pro
 
 on:
   workflow_dispatch:
@@ -12,7 +12,8 @@ jobs:
 
       - name: Cleanup Disk Space
         run: |
-          sudo rm -rf /usr/share/dotnet /etc/mysql /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet /etc/mysql /usr/local/lib/android /opt/ghc
+          sudo apt-get clean
           df -h
 
       - name: Install Dependencies
@@ -22,30 +23,35 @@ jobs:
             gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib \
             libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev \
             libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig repo python3 dtc \
-            bc build-essential zip curl libstdc++6 git wget
+            bc build-essential zip curl libstdc++6 git wget libssl-dev
 
-      - name: Initialize Repo & Sync
+      - name: Initialize Repo
         run: |
           mkdir ~/twrp && cd ~/twrp
-          repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
-          repo sync -j$(nproc --all) --force-sync --no-tags --no-clone-bundle
+          # Menggunakan TWRP 11 minimal manifest sesuai basis Android 11 Meizu Note 21 Pro
+          repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11
+          repo sync -j$(nproc --all) --force-sync --no-tags --no-clone-bundle --current-branch
 
       - name: Clone Device Tree
         run: |
           cd ~/twrp
-          # Mengambil branch 'twrp' dari repo kamu
-          git clone https://github.com/opek098/android_device_meizu_note21pro -b twrp device/meizu/note21pro
+          # Pastikan branch 'main' adalah tempat device tree kamu berada
+          git clone https://github.com/opek098/android_device_meizu_note21pro -b main device/meizu/note21pro
 
       - name: Start Compilation
         run: |
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
-          lunch twrp_note21pro-eng
+          # Menggunakan target yang sudah diperbaiki (tanpa spasi)
+          lunch twrp_note21pro-eng || lunch omni_note21pro-eng
           mka recoveryimage -j$(nproc --all)
 
       - name: Upload Recovery
+        if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: TWRP-Meizu-Note21Pro
-          path: ~/twrp/out/target/product/note21pro/*.img
+          name: TWRP-Meizu-Note21Pro-Build
+          path: |
+            ~/twrp/out/target/product/note21pro/*.img
+            ~/twrp/out/target/product/note21pro/*.zip
