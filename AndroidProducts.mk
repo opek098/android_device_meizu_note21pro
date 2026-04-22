@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-	$(LOCAL_DIR)/twrp_MEIZU NOTE 21 pro.mk
+	$(LOCAL_DIR)/twrp_meizu_note_21pro.mk
 
 COMMON_LUNCH_CHOICES := \
-	twrp_MEIZU NOTE 21 pro-eng \
-	twrp_MEIZU NOTE 21 pro-userdebug \
-	twrp_MEIZU NOTE 21 pro-user
+	twrp_meizu_note_21pro-eng \
+	twrp_meizu_note_21pro-userdebug \
+	twrp_meizu_note21pro-user
